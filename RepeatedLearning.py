@@ -78,7 +78,7 @@ def Learn( numOfRepeat, numOfAllConc, numOfConc, numOfSen, threshold):
     
     for i in range(numOfRepeat):
         #各概念の単語情報を作成
-        W_O, W_M = WordHist.makeHist(W_ALL, numOfAllConc)
+        W_O, W_M = WordHist.makeHist(W_ALL, numOfAllConc, first=(i==0))
 
         ###################　　　　　mMLDAの学習&認識　　           ##############################
         # os.system( "./mmlda_fast -learn LearnData LearnParams.txt learnModel" )
@@ -101,10 +101,10 @@ def Learn( numOfRepeat, numOfAllConc, numOfConc, numOfSen, threshold):
         #mlda3 = mlda.MLDA(10, [100,100])
 
         w = 50
-        mlda1 = mlda.MLDA(4, [w, w], category=object_category)
-        mlda2 = mlda.MLDA(4, [w, w], category=motion_category)
+        mlda1 = mlda.MLDA(5, [w, w])#, category=object_category)
+        mlda2 = mlda.MLDA(5, [w, w])#, category=motion_category)
         #mlda3 = mlda.MLDA(4, [w, w])
-        mlda_top = mlda.MLDA(4, [w, w])
+        mlda_top = mlda.MLDA(5, [w, w])
         
         mlda1.connect( obs1, obs2 )
         mlda2.connect( obs3, obs4 )

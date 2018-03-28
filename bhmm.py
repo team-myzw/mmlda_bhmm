@@ -125,8 +125,9 @@ def sample_idx(prob ):
 
 def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, NUM_OF_CONC, iterNum = NUM_OF_ITER ):
     # ************************** 初期化 **************************
-    numOfWords = len( wordToIndex )
+    #numOfWords = len( wordToIndex )
     #numOfWords = 3000
+    numOfWords = 67
     print "numOfWords: ", numOfWords
     Nyy = numpy.zeros( (NUM_OF_ALL_TAGS, NUM_OF_ALL_TAGS) )
     Nyx = numpy.zeros( (NUM_OF_ALL_TAGS, numOfWords) )
@@ -162,12 +163,14 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
                                         conc = []
                                         prob = []
                                         for l, score in enumerate(scores[w].split("\t")):
+                                            print "hoho", l
                                             if not score == "\n":
                                                 if l % 2 == 0:
                                                     prob.append(float(score))
                                                 else:
                                                     conc.append(int(score))
                                         idx = sample_idx(prob)
+                                        print "ho",len(conc), idx
                                         y.append(conc[idx])
                                     break
                             break

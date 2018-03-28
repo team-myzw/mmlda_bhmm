@@ -125,9 +125,9 @@ def sample_idx(prob ):
 
 def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, NUM_OF_CONC, iterNum = NUM_OF_ITER ):
     # ************************** 初期化 **************************
-    #numOfWords = len( wordToIndex )
+    numOfWords = len( wordToIndex )
     #numOfWords = 3000
-    numOfWords = 67
+    #numOfWords = 67
     print "numOfWords: ", numOfWords
     Nyy = numpy.zeros( (NUM_OF_ALL_TAGS, NUM_OF_ALL_TAGS) )
     Nyx = numpy.zeros( (NUM_OF_ALL_TAGS, numOfWords) )
@@ -153,9 +153,11 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
                 y.append( NUM_OF_TAGS+1 )
             else:
                 for k, v in sorted(wordToIndex.items(), key=lambda x:x[1]):
+                        #print "bhmm156",k,v
                         if w == v:
                             for key, value in Concepts.items():
                                 if key == k:
+                                    #print "bhmm159,",NUM_OF_CONC,w,key,value
                                     if value == NUM_OF_CONC+1:
                                         y.append(random.randint(1,NUM_OF_TAGS))
                                         #y.append(4)
@@ -163,14 +165,14 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
                                         conc = []
                                         prob = []
                                         for l, score in enumerate(scores[w].split("\t")):
-                                            print "hoho", l
+                                            #print "hoho", l
                                             if not score == "\n":
                                                 if l % 2 == 0:
                                                     prob.append(float(score))
                                                 else:
                                                     conc.append(int(score))
                                         idx = sample_idx(prob)
-                                        print "ho",len(conc), idx
+                                        #print "ho",len(conc), idx
                                         y.append(conc[idx])
                                     break
                             break
@@ -384,7 +386,7 @@ def main(numOfConc, numOfAllConc):
 
     print NUM_OF_TAGS, NUM_OF_ALL_TAGS
 
-    wordToIndex, senData = LoadSentences( "sentences.txt" )
+    wordToIndex, senData = LoadSentences( "LearnData/sentences.txt" )
 
     SampleCorpus( senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, NUM_OF_CONC )
     transitionProb, emissionProb = LoadAndCalcHMMParams(NUM_OF_TAGS, ALPHA_TAG)

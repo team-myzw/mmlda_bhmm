@@ -8,7 +8,7 @@ import numpy
 def concept_prob( word, concept, C, W, first=False ):
 
     Nyx = numpy.zeros((C, W)) if first else numpy.loadtxt("result/Nyx.txt")
-        
+
     prob = (Nyx[concept,word]+ 0.01) / (sum(Nyx[:,word]) + C * 0.01)
     return prob
 
@@ -21,7 +21,7 @@ def makeHist(wordAll, numOfAllConc, first=False):
     N, W = wordAll.shape
     W_O = [[0.0 for i in range(W)] for j in range(N)]
     W_M = [[0.0 for i in range(W)] for j in range(N)]
-    W_R = [[0.0 for i in range(W)] for j in range(N)]
+    W_P = [[0.0 for i in range(W)] for j in range(N)]
 
     for n in range(N):
         for word in range( W ):
@@ -31,37 +31,5 @@ def makeHist(wordAll, numOfAllConc, first=False):
                 prob = concept_prob(word, 2, numOfAllConc, W, first)
                 W_M[n][word] = wordAll[n][word] * prob
                 prob = concept_prob(word, 3, numOfAllConc, W, first)
-                W_R[n][word] = wordAll[n][word] * prob
-
-    #numpy.savetxt( "result/words.Object", W_O, fmt="%0.1f", delimiter="\t" )
-    #numpy.savetxt( "result/words.Motion", W_M, fmt="%0.1f", delimiter="\t" )
-    #numpy.savetxt( "result/words.Reward", W_R, fmt="%0.1f", delimiter="\t" )
-    return W_O, W_M
-
-    print "Finish\n"
-
-def makeHist_for_recog(wordAll):
-    print"Start\n"
-
-    N, W = wordAll.shape
-    W_O = [[0.0 for i in range(W)] for j in range(N)]
-    W_M = [[0.0 for i in range(W)] for j in range(N)]
-    #W_R = [[0.0 for i in range(W)] for j in range(N)]
-
-    for n in range(N):
-        for word in range( W ):
-            if wordAll[n][word] > 0.0:
-                prob = concept_prob(word, 1)
-                W_O[n][word] = wordAll[n][word] * prob
-                prob = concept_prob(word, 2)
-                W_M[n][word] = wordAll[n][word] * prob
-                #prob = concept_prob(word, 3)
-                #W_R[n][word] = wordAll[n][word] * prob
-
-    numpy.savetxt( "result/words.Object", W_O, fmt="%0.1f", delimiter="\t" )
-    numpy.savetxt( "result/words.Motion", W_M, fmt="%0.1f", delimiter="\t" )
-    #numpy.savetxt( "result/words.Reward", W_R, fmt="%0.1f", delimiter="\t" )
-
-    print "Finish\n"
-    #return W_O, W_M, W_R
-    return W_O, W_M
+                W_P[n][word] = wordAll[n][word] * prob
+    return W_O, W_M, W_P

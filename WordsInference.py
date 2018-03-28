@@ -191,7 +191,7 @@ def hmm_PW(recogdir, learndir, conName, nyxfile):
         foldername = learndir + "/001"
         recogfolger = recogdir + "/001"
         filename = foldername + "/Nmwz001.txt"
-    elif conName == "Reward":
+    elif conName == "Place":
         concept = 3
         foldername = learndir + "/002"
         recogfolger = recogdir + "/002"

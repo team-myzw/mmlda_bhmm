@@ -100,7 +100,7 @@ def CalcLogLikelihood(senData, Ysw, Nyy, Nyx, wordsNum, NUM_OF_TAGS, ALPHA_TAG):
         Y = Ysw[s_i]
         X = senData[s_i]
         #print "len(X)", len(X)
-        #print "Y", Y            
+        #print "Y", Y
         for i in range(1, len(X)):
             prevY = Y[i-1]
             currY = Y[i]
@@ -186,8 +186,8 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
     concepts.close()
     fw.close()
     # 初期パラメータの保存
-    numpy.savetxt( "result/initNyy.txt", Nyy, delimiter="\t", fmt="%d" )
-    numpy.savetxt( "result/initNyx.txt", Nyx, delimiter="\t", fmt="%d" )
+    # numpy.savetxt( "result/initNyy.txt", Nyy, delimiter="\t", fmt="%d" )
+    # numpy.savetxt( "result/initNyx.txt", Nyx, delimiter="\t", fmt="%d" )
     # ************************************************************
 
     """

@@ -148,8 +148,8 @@ def CreateMapConcepts( wordsListFilename, maxConceptsFilename, sortedScoreFilena
     fw_init = codecs.open( "mapConcept_init.txt", "w" )
     fw_score = codecs.open( "mapConcept_scored.txt", "w")
 
-    print "len words,",len(words)
-    print "len mapConecepts:",len(mapConcepts)
+    #print "len words,",len(words)
+    #print "len mapConecepts:",len(mapConcepts)
     for i in range( len(words) ):
         fw.write( "%s\t%d\n" % ( words[i].strip(), mapConcepts[i] ) )
         fw_init.write( "%s\t%d\n" % ( words[i].strip(), mapConcepts[i] ) )

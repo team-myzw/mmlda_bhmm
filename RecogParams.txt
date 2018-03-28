@@ -1,0 +1,26 @@
+numOfConcepts	4
+
+Bottom	Object	1	weight	1
+numOfCats	4
+numOfModals	2
+vision	1	weight	1000	use
+words	2	weight	1000	not_use
+
+Bottom	Motion	2	weight	1
+numOfCats	9
+numOfModals	2
+motion	1	weight	1000	use
+words	2	weight	1000	not_use
+
+Bottom	Reward	3	weight	1
+numOfCats	3
+numOfModals	2
+reward	1	weight	1000	use
+words	2	weight	1000	not_use
+
+Top	Top	4	weight	1
+numOfCats	36
+numOfModals	0
+
+numOfBottomIterations	50
+numOfTopIterations	100

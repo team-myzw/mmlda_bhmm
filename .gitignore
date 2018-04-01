@@ -2,4 +2,6 @@ module*
 *~
 *.pyc
 result/*
+!.gitkeep
 WordsInfer/*
+mapConcept*

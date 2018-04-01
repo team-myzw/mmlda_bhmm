@@ -87,9 +87,9 @@ def Learn( numOfRepeat, numOfAllConc, numOfConc, numOfSen, threshold):
         # 観測ノード数 + MLDA数
         module_num = 10
 
-        n_mwz_obj, _ = mlda_p.load_model("module%03d_mlda" % (module_num * i + 6))
-        n_mwz_mot, _ = mlda_p.load_model("module%03d_mlda" % (module_num * i + 7))
-        n_mwz_pla, _ = mlda_p.load_model("module%03d_mlda" % (module_num * i + 8))
+        n_mwz_obj, _ = mlda_p.load_model("module%03d_mlda/004" % (module_num * i + 6))
+        n_mwz_mot, _ = mlda_p.load_model("module%03d_mlda/004" % (module_num * i + 7))
+        n_mwz_pla, _ = mlda_p.load_model("module%03d_mlda/004" % (module_num * i + 8))
 
         #相互情報量の計算
         WordsInference.main(threshold, [n_mwz_obj[1].T, n_mwz_mot[1].T, n_mwz_pla[1].T])

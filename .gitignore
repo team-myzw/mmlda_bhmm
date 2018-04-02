@@ -5,3 +5,4 @@ result/*
 !.gitkeep
 WordsInfer/*
 mapConcept*
+notebook/.ipynb_checkpoints/*

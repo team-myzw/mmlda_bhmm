@@ -20,8 +20,6 @@ EOS = u"EOS"
 # 学習文のロード
 # 学習文内の単語種類により辞書の作成
 def LoadSentences( filename ):
-    #filename_ = "/home/robocup/miyazawa_ws/src/ica4baxter/src/ML_BHMM_miya/sentences_for_dic.txt"
-    #sentences = codecs.open( filename_, "r").readlines()
     sentences = codecs.open( filename, "r").readlines()
 
     # 辞書の作成
@@ -35,8 +33,6 @@ def LoadSentences( filename ):
                 index += 1
     wordToIndex[BOS] = index
     wordToIndex[EOS] = index + 1
-    #wordToIndex[BOS] = 2998
-    #wordToIndex[EOS] = 2999
     sentences = codecs.open( filename, "r").readlines()
     # 学習データのインデックシング
     senData = []
@@ -126,8 +122,6 @@ def sample_idx(prob ):
 def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, NUM_OF_CONC, iterNum = NUM_OF_ITER ):
     # ************************** 初期化 **************************
     numOfWords = len( wordToIndex )
-    #numOfWords = 3000
-    #numOfWords = 67
     print "numOfWords: ", numOfWords
     Nyy = numpy.zeros( (NUM_OF_ALL_TAGS, NUM_OF_ALL_TAGS) )
     Nyx = numpy.zeros( (NUM_OF_ALL_TAGS, numOfWords) )
@@ -153,11 +147,9 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
                 y.append( NUM_OF_TAGS+1 )
             else:
                 for k, v in sorted(wordToIndex.items(), key=lambda x:x[1]):
-                        #print "bhmm156",k,v
                         if w == v:
                             for key, value in Concepts.items():
                                 if key == k:
-                                    #print "bhmm159,",NUM_OF_CONC,w,key,value
                                     if value == NUM_OF_CONC+1:
                                         y.append(random.randint(1,NUM_OF_TAGS))
                                         #y.append(4)
@@ -165,14 +157,12 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
                                         conc = []
                                         prob = []
                                         for l, score in enumerate(scores[w].split("\t")):
-                                            #print "hoho", l
                                             if not score == "\n":
                                                 if l % 2 == 0:
                                                     prob.append(float(score))
                                                 else:
                                                     conc.append(int(score))
                                         idx = sample_idx(prob)
-                                        #print "ho",len(conc), idx
                                         y.append(conc[idx])
                                     break
                             break
@@ -185,21 +175,7 @@ def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, 
             Nyx[y[i], senData[s_i][i]] += 1
     concepts.close()
     fw.close()
-    # 初期パラメータの保存
-    # numpy.savetxt( "result/initNyy.txt", Nyy, delimiter="\t", fmt="%d" )
-    # numpy.savetxt( "result/initNyx.txt", Nyx, delimiter="\t", fmt="%d" )
-    # ************************************************************
 
-    """
-    if os.path.isfile( "result/Nyy.txt" ) and os.path.isfile( "result/Nyx.txt" ):
-        Nyy_ = numpy.loadtxt( "result/Nyy.txt" )
-        Nyx_ = numpy.loadtxt( "result/Nyx.txt" )
-        Nyy = Nyy + Nyy_
-        Nyx = Nyx + Nyx_
-    else:
-        pass
-        # raw_input("nyy nyx")
-    """
 
     # ********************* サンプリング処理 **********************
     maxLikelihood = -1e100

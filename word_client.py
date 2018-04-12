@@ -12,7 +12,8 @@ from codecs import open
 
 #import Mecab #中友さん自作Mecab用パッケージ
 import MeCab # 普通のMeCab
-
+from microphone_driver.msg import AudioData
+from audio_module_msg.msg import AudioSentence
 import rospy
 
 class WordClient(object):
@@ -35,8 +36,13 @@ class WordClient(object):
         self._num_sentence = 0
         self._utterd_words = list()
         self._lock = threading.RLock()
-        
+
         self._codebook = list()
+        # topics
+        self._word_data_sub = rospy.Subscriber("/word/audio_data", AudioData,
+                                               self.audio_data_cb)
+        self._word_sentence_sub = rospy.Subscriber("/AudioSentence",
+                                                   AudioSentence, self.sentence_data_cb)
 
 
     def wait_for_service(self, service):
@@ -134,10 +140,12 @@ class WordClient(object):
             # is_accept がFalseの間は情報取得を行わない
             if not self.is_accept:
                 return
+            if len(sentence_data.sentences[0]) is 0:
+                return
             # 保存する sentence の名前を決める
             sentence_file_name = os.path.join(self._wav_dir, "sentence_{0:03d}.txt".format(self._num_sentence))
             f = open(sentence_file_name, "w")
-            f.write(sentence_data)
+            f.write(sentence_data.sentences[0])
 	    # f.write(sentence_data.sentences[0])
             f.close()
             self._num_sentence += 1
@@ -317,6 +325,23 @@ class WordClient(object):
     def load_codebook(self,file_path):
         self._codebook = np.loadtxt(file_path,dtype=str).tolist()
 
+    def make_word_hist_sample(self,word_dir="./tmp"):
+        self.update(word_dir)
+        self.setAccept()
+        # word の処理
+        raw_input("rosbagが終了したらエンターを押す")
+        # for sen in caption_pd[caption_pd.secne_id==i].sentences.values:
+        #     self.sentence_data_cb(sen)
+        self.setReject()
+        self.split_sentences(word_dir)
+        self.sumalize_utter(word_dir)
+        sentences_file_path = os.path.join(word_dir,"sentences.txt")
+        self.update_word_codebook(sentences_file_path)
+        self.words2histogram(
+        os.path.join(word_dir,"sentences.txt"),
+        os.path.join(word_dir,"hist.txt")
+        )
+        self.dump_codebook(os.path.join(word_dir,"codebook.txt"))
 
 def sample():
 
@@ -340,10 +365,13 @@ def sample():
         client.words2histogram(os.path.join(target_dir,"sentences.txt"), os.path.join(target_dir, "hist.txt"))
     print "sample end"
 
+
+
 def main():
     #start node
-    rospy.init_node("word_client_for_Dragon")
-    sample()
+    wc = WordClient()
+    rospy.init_node("word_client")
+    wc.make_word_hist_sample()
     rospy.spin()
 
 if __name__ == "__main__":

@@ -122,7 +122,6 @@ def sample_idx(prob ):
 def SampleCorpus(senData, wordToIndex, NUM_OF_TAGS, NUM_OF_ALL_TAGS, ALPHA_TAG, NUM_OF_CONC, iterNum = NUM_OF_ITER ):
     # ************************** 初期化 **************************
     numOfWords = len( wordToIndex )
-    print "numOfWords: ", numOfWords
     Nyy = numpy.zeros( (NUM_OF_ALL_TAGS, NUM_OF_ALL_TAGS) )
     Nyx = numpy.zeros( (NUM_OF_ALL_TAGS, numOfWords) )
 
@@ -360,7 +359,7 @@ def main(numOfConc, numOfAllConc):
     NUM_OF_ALL_TAGS = NUM_OF_TAGS + 2
     ALPHA_TAG  = 0.1 * 1.0 / (NUM_OF_ALL_TAGS)
 
-    print NUM_OF_TAGS, NUM_OF_ALL_TAGS
+    # print NUM_OF_TAGS, NUM_OF_ALL_TAGS
 
     wordToIndex, senData = LoadSentences( "LearnData/sentences.txt" )
 

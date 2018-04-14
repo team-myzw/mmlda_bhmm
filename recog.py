@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
+import os
 import numpy as np
 import bhmm
 import WordsInference
@@ -46,10 +47,11 @@ def Recog(numOfAllConc,model_num):
 
     for it in range(5):
         print it
-        mlda1.update("result_{0}/module026_mlda".format(model_num) )
-        mlda2.update("result_{0}/module027_mlda".format(model_num) )
-        mlda3.update("result_{0}/module028_mlda".format(model_num) )
-        mlda_top.update("result_{0}/module029_mlda".format(model_num) )
+        mlda1.update("result_{0}/module006_mlda".format(model_num) )
+        mlda2.update("result_{0}/module007_mlda".format(model_num) )
+        mlda3.update("result_{0}/module008_mlda".format(model_num) )
+        mlda_top.update("result_{0}/module009_mlda".format(model_num) )
 
 if __name__ == '__main__':
     Recog(numOfAllConc=5,model_num=0)
+    os.system("mv module* RecogData")

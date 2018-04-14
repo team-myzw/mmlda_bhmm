@@ -15,7 +15,6 @@ def MakeDir( foldername ):
     try:
         os.makedirs( foldername )
     except:
-        print "%s already exist" % foldername
         pass
 
 
@@ -240,7 +239,6 @@ def make_particle_file(pwfile, nyxfile, conNum):
 
 
 def main(threshold, n_mwz_list):
-    print "Start ... \n"
     #modelName = "recogModel/model"
     # 予測した単語の発生頻度の読込用
     #Filenames = [ modelName + "/000/Nmwz001.txt",       # 物体概念
@@ -283,5 +281,3 @@ def main(threshold, n_mwz_list):
     numpy.savetxt( foldername + "/" + "maxScorePerConcepts.txt"  , maxScorePerConcepts  , fmt="%0.10g", delimiter="\t" )
 
     CreateMapConcepts("LearnData/wordlist.txt", "WordsInfer/maxConcepts_mi.txt", "WordsInfer/sortedScores_mi.txt", "WordsInfer/sortedConcepts_mi.txt", threshold )
-
-    print "Finish ... \n"

@@ -14,7 +14,7 @@ def concept_prob( word, concept, C, W, first=False, Nyx_path="result/Nyx.txt"):
 
 #品詞推定を考慮して各概念の単語情報を作成
 def makeHist(wordAll, numOfAllConc, first=False, Nyx_path="result/Nyx.txt"):
-    print"Start\n"
+    # print"Start\n"
 
     N, W = wordAll.shape
     W_O = [[0.0 for i in range(W)] for j in range(N)]
